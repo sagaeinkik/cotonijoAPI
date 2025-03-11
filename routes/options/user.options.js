@@ -48,9 +48,36 @@ module.exports.addUserOpts = {
             type: 'object',
             required: ['fullName', 'username', 'password'],
             properties: {
-                fullName: { type: 'string', minLength: 3, maxLength: 255 },
-                username: { type: 'string', minLength: 3, maxLength: 255 },
-                password: { type: 'string', minLength: 3 },
+                fullName: {
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 255,
+                    errorMessage: {
+                        minLength: 'Namnet måste innehålla minst 3 tecken.',
+                        maxLength: 'Namnet får innehålla max 255 tecken.',
+                    },
+                },
+                username: {
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 255,
+                    errorMessage: {
+                        minLength: 'Användarnamnet måste innehålla minst 3 tecken.',
+                        maxLength: 'Användarnamnet får innehålla max 255 tecken.',
+                    },
+                },
+                password: {
+                    type: 'string',
+                    minLength: 3,
+                    errorMessage: { minLength: 'Lösenordet måste innehålla minst 3 tecken.' },
+                },
+            },
+            errorMessage: {
+                required: {
+                    fullName: 'Du måste ange ett namn',
+                    username: 'Du måste ange ett användarnamn',
+                    password: 'Du måste ange ett lösenord',
+                },
             },
         },
         response: {
@@ -81,8 +108,8 @@ module.exports.loginUserOpts = {
             type: 'object',
             required: ['username', 'password'],
             properties: {
-                username: { type: 'string' },
-                password: { type: 'string' },
+                username: { type: 'string', errorMessage: 'Du måste ange ett användarnamn.' },
+                password: { type: 'string', errorMessage: 'Du måste ange ett lösenord.' },
             },
         },
         response: {
@@ -127,8 +154,18 @@ module.exports.updateUserOpts = {
         body: {
             type: 'object',
             properties: {
-                fullName: { type: 'string', minLength: 3, maxLength: 255 },
-                username: { type: 'string', minLength: 3, maxLength: 255 },
+                fullName: {
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 255,
+                    errorMessage: 'Namnet måste vara mellan 3 och 255 tecken långt.',
+                },
+                username: {
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 255,
+                    errorMessage: 'Användarnamnet måste vara mellan 3 och 255 tecken långt.',
+                },
                 password: { type: 'string' },
             },
         },

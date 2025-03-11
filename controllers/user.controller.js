@@ -54,19 +54,10 @@ module.exports.addUser = async (request, reply) => {
     err = errorHandler.resetErrors();
     const { fullName, username, password } = request.body;
 
-    //Validera fält
-    const valResults = [
-        errorHandler.checkEmpty(fullName, 'Fullständigt namn'),
-        errorHandler.checkEmpty(username, 'Användarnamn'),
-        errorHandler.checkEmpty(password, 'Lösenord'),
-    ];
-    const valError = errorHandler.validateFields(reply, valResults);
-    if (valError) {
-        return valError;
-    }
+    //Validering av fält sker i Options
 
     try {
-        //Kolla om användare redan finns (error-meddelandet från Prisma var så fult)
+        //Kolla om användare redan finns
         const existingUser = await prisma.user.findUnique({ where: { username: username } });
         if (existingUser) {
             err = errorHandler.createError('Conflict', 409, 'Användarnamnet är upptaget.');

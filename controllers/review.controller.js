@@ -91,6 +91,30 @@ module.exports.getReviewsByCountry = async (request, reply) => {
 };
 
 //Skapa ny
+module.exports.addReview = async (request, reply) => {
+    err = errorHandler.resetErrors();
+
+    //Hämta data från body
+    const { content, rating, ccn3, userId } = request.body;
+
+    //Validering sker i options
+
+    try {
+        //Skapa recension
+        const review = await prisma.review.create({
+            data: {
+                content,
+                rating,
+                ccn3,
+                userId: parseInt(userId),
+            },
+        });
+
+        return reply.send({ message: 'Recension tillagd!', review });
+    } catch (error) {
+        return reply.code(500).send(error);
+    }
+};
 
 //Uppdatera
 

@@ -1,8 +1,19 @@
 'use strict';
 
-const fastify = require('fastify')({ logger: false });
-const { PrismaClient } = require('@prisma/client');
+const fastify = require('fastify')({
+    //Errorhantering
+    ajv: {
+        plugins: [require('ajv-errors')],
+        customOptions: { allErrors: true },
+    },
+    //Loggning: false för det blir så väldigt mycket
+    logger: false,
+});
+const { errorMapping } = require('./utils/errorHandler');
 require('dotenv').config();
+
+//ORM
+const { PrismaClient } = require('@prisma/client');
 const prisma = require('./prisma');
 
 //Middleware
@@ -12,7 +23,9 @@ fastify.register(cors, {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 });
+fastify.setErrorHandler(errorMapping);
 
+//Cookie-hantering
 const cookie = require('@fastify/cookie');
 fastify.register(cookie, {
     secret: process.env.JWT_SECRET_KEY,
