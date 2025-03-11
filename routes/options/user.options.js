@@ -108,8 +108,14 @@ module.exports.loginUserOpts = {
             type: 'object',
             required: ['username', 'password'],
             properties: {
-                username: { type: 'string', errorMessage: 'Du måste ange ett användarnamn.' },
-                password: { type: 'string', errorMessage: 'Du måste ange ett lösenord.' },
+                username: { type: 'string' },
+                password: { type: 'string' },
+            },
+            errorMessage: {
+                required: {
+                    username: 'Du måste ange ett användarnamn.',
+                    password: 'Du måste ange ett lösenord.',
+                },
             },
         },
         response: {

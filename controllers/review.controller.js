@@ -11,7 +11,20 @@ module.exports.getAllReviews = async (request, reply) => {
     //Nollställ error
     err = errorHandler.resetErrors();
     try {
-        const reviews = await prisma.review.findMany();
+        //Alla recensioner: inkludera användarinfo
+        const reviews = await prisma.review.findMany({
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
 
         //Inga recensioner
         if (reviews.length === 0) {
@@ -33,7 +46,20 @@ module.exports.getReviewById = async (request, reply) => {
     const { id } = request.params;
 
     try {
-        const review = await prisma.review.findUnique({ where: { id: parseInt(id) } });
+        const review = await prisma.review.findUnique({
+            where: { id: parseInt(id) },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
 
         //Ingen recension
         if (!review) {
@@ -55,7 +81,20 @@ module.exports.getReviewsByUser = async (request, reply) => {
 
     try {
         //Hämta reviews med användarID
-        const reviews = await prisma.review.findMany({ where: { userId: parseInt(id) } });
+        const reviews = await prisma.review.findMany({
+            where: { userId: parseInt(id) },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
 
         if (reviews.length === 0) {
             err = errorHandler.createError('Not Found', 404, 'Inga recensioner hittades.');
@@ -77,7 +116,20 @@ module.exports.getReviewsByCountry = async (request, reply) => {
 
     try {
         //Hämta med hjälp av landskod
-        const reviews = await prisma.review.findMany({ where: { ccn3: ccn3 } });
+        const reviews = await prisma.review.findMany({
+            where: { ccn3: ccn3 },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
 
         if (reviews.length === 0) {
             err = errorHandler.createError('Not found', 404, 'Inga recensioner hittades.');
@@ -108,6 +160,17 @@ module.exports.addReview = async (request, reply) => {
                 ccn3,
                 userId: parseInt(userId),
             },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
         });
 
         return reply.send({ message: 'Recension tillagd!', review });
@@ -117,5 +180,81 @@ module.exports.addReview = async (request, reply) => {
 };
 
 //Uppdatera
+module.exports.updateReview = async (request, reply) => {
+    err = errorHandler.resetErrors();
+
+    const { id } = request.params;
+    const updateData = request.body;
+
+    try {
+        //Hitta recension
+        const review = await prisma.review.findUnique({ where: { id: parseInt(id) } });
+
+        //Ingen recension hittades
+        if (!review) {
+            err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            return reply.code(err.https_response.code).send(err);
+        }
+
+        //Försök uppdatera
+        const updatedReview = await prisma.review.update({
+            where: { id: parseInt(id) },
+            data: updateData,
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
+
+        return reply.send({ message: 'Recension uppdaterad!', updatedReview });
+    } catch (error) {
+        return reply.code(500).send(error);
+    }
+};
 
 //Radera
+module.exports.deleteReview = async (request, reply) => {
+    err = errorHandler.resetErrors();
+
+    const { id } = request.params;
+
+    try {
+        //Hitta recension
+        const review = await prisma.review.findUnique({
+            where: { id: parseInt(id) },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
+
+        //Ingen recension
+        if (!review) {
+            err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            return reply.code(err.https_response.code).send(err);
+        }
+
+        //Försök radera
+        await prisma.review.delete({
+            where: { id: parseInt(id) },
+        });
+
+        return reply.send({ message: 'Recension raderad!', review });
+    } catch (error) {
+        return reply.code(500).send(error);
+    }
+};

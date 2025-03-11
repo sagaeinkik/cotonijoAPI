@@ -17,7 +17,14 @@ module.exports.getAllReviewsOpts = {
                         rating: { type: 'number' },
                         ccn3: { type: 'string' },
                         posted: { type: 'string', format: 'date-time' },
-                        userId: { type: 'number' },
+                        author: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'number' },
+                                fullName: { type: 'string' },
+                                username: { type: 'string' },
+                            },
+                        },
                     },
                 },
             },
@@ -38,7 +45,14 @@ module.exports.getReviewByIdOpts = {
                     rating: { type: 'number' },
                     ccn3: { type: 'string' },
                     posted: { type: 'string', format: 'date-time' },
-                    userId: { type: 'number' },
+                    author: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            fullName: { type: 'string' },
+                            username: { type: 'string' },
+                        },
+                    },
                 },
             },
         },
@@ -60,7 +74,14 @@ module.exports.getReviewsByUserOpts = {
                         rating: { type: 'number' },
                         ccn3: { type: 'string' },
                         posted: { type: 'string', format: 'date-time' },
-                        userId: { type: 'number' },
+                        author: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'number' },
+                                fullName: { type: 'string' },
+                                username: { type: 'string' },
+                            },
+                        },
                     },
                 },
             },
@@ -83,7 +104,14 @@ module.exports.getReviewsByCountryOpts = {
                         rating: { type: 'number' },
                         ccn3: { type: 'string' },
                         posted: { type: 'string', format: 'date-time' },
-                        userId: { type: 'number' },
+                        author: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'number' },
+                                fullName: { type: 'string' },
+                                username: { type: 'string' },
+                            },
+                        },
                     },
                 },
             },
@@ -144,7 +172,14 @@ module.exports.addReviewOpts = {
                             rating: { type: 'number' },
                             ccn3: { type: 'string' },
                             posted: { type: 'string', format: 'date-time' },
-                            userId: { type: 'number' },
+                            author: {
+                                type: 'object',
+                                properties: {
+                                    id: { type: 'number' },
+                                    fullName: { type: 'string' },
+                                    username: { type: 'string' },
+                                },
+                            },
                         },
                     },
                 },
@@ -156,5 +191,96 @@ module.exports.addReviewOpts = {
 };
 
 //Uppdatera
+module.exports.updateReviewOpts = {
+    schema: {
+        body: {
+            type: 'object',
+            properties: {
+                content: {
+                    type: 'string',
+                    minLength: 3,
+                    errorMessage: { minLength: 'Textinnehållet måste innehålla minst 3 tecken.' },
+                },
+                rating: {
+                    type: 'number',
+                    minimum: 1,
+                    maximum: 5,
+                    errorMessage: {
+                        minimum: 'Betyget kan som lägst vara 1.',
+                        maximum: 'Betyget kan som högst vara 5.',
+                    },
+                },
+                ccn3: {
+                    type: 'string',
+                    pattern: '^[0-9]{3}$',
+                    errorMessage: {
+                        pattern: 'Landskoden måste vara tresiffrig.',
+                    },
+                },
+                userId: { type: 'number' },
+            },
+        },
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    message: { type: 'string' },
+                    updatedReview: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            content: { type: 'string' },
+                            rating: { type: 'number' },
+                            ccn3: { type: 'string' },
+                            posted: { type: 'string', format: 'date-time' },
+                            author: {
+                                type: 'object',
+                                properties: {
+                                    id: { type: 'number' },
+                                    fullName: { type: 'string' },
+                                    username: { type: 'string' },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    preHandler: pwHandler.authenticateToken,
+    handler: reviewController.updateReview,
+};
 
 //Radera
+module.exports.deleteReviewOpts = {
+    schema: {
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    message: { type: 'string' },
+                    review: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            content: { type: 'string' },
+                            rating: { type: 'number' },
+                            ccn3: { type: 'string' },
+                            posted: { type: 'string', format: 'date-time' },
+                            author: {
+                                type: 'object',
+                                properties: {
+                                    id: { type: 'number' },
+                                    fullName: { type: 'string' },
+                                    username: { type: 'string' },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    preHandler: pwHandler.authenticateToken,
+    handler: reviewController.deleteReview,
+};
