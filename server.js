@@ -30,7 +30,7 @@ fastify.get('/', async (request, reply) => {
 
 fastify.register(require('./routes/user.routes'));
 
-// Hook för att se om cookies finns i request!
+// Hook för att se om cookies finns i request (kommenteras bort vid publicering, kom ihåg)
 fastify.addHook('onRequest', async (request, reply) => {
     console.log('Cookies:', request.cookies);
 });

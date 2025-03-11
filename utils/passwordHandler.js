@@ -60,22 +60,27 @@ module.exports.authenticateToken = async (request, reply) => {
     //Hämta token från cookie
     const token = request.cookies.jwt;
 
+    //Token saknas
     if (!token) {
         err = errHandler.createError('Unauthorized', 401, 'Missing Token');
         return reply.code(err.https_response.code).send(err);
     }
 
-    //Verifiera token
-    jwt.verify(token, jwtKey, (err, user) => {
-        if (err) {
-            console.error('Tokenvalideringsfel: ', err);
-            err = errHandler.createError('Unauthorized', 403, 'Invalid Token');
-            return reply.code(err.https_response.code).send(err);
-        }
+    try {
+        //Verifiera mha jwt-secret-key
+        const user = jwt.verify(token, jwtKey);
 
-        //Inget error, sätt användarnamn i request
+        //Sätt användarnamn
         request.username = user.username;
-    });
+    } catch (error) {
+        const authError = errHandler.createError('Unauthorized', 401, 'Invalid Token');
+        return reply.code(authError.https_response.code).send(authError);
+    }
+};
+
+//Radera cookie
+module.exports.destroyCookie = async (reply) => {
+    reply.clearCookie('jwt', { path: '/', httpOnly: true, sameSite: 'lax' });
 };
 
 //Hasha lösenord
