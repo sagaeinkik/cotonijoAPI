@@ -185,14 +185,38 @@ module.exports.updateReview = async (request, reply) => {
 
     const { id } = request.params;
     const updateData = request.body;
+    const username = request.username; //Från authenticateToken (en prehandler)
 
     try {
         //Hitta recension
-        const review = await prisma.review.findUnique({ where: { id: parseInt(id) } });
+        const review = await prisma.review.findUnique({
+            where: { id: parseInt(id) },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        fullName: true,
+                        username: true,
+                        password: false,
+                        registered: false,
+                    },
+                },
+            },
+        });
 
         //Ingen recension hittades
         if (!review) {
             err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            return reply.code(err.https_response.code).send(err);
+        }
+
+        //Review hittades; jämför användarnamn på recension med användarnamn i request
+        if (review.author.username !== username) {
+            err = errorHandler.createError(
+                'Forbidden',
+                403,
+                'Du har inte behörighet att utföra denna åtgärd.'
+            );
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -245,6 +269,16 @@ module.exports.deleteReview = async (request, reply) => {
         //Ingen recension
         if (!review) {
             err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            return reply.code(err.https_response.code).send(err);
+        }
+
+        //Jämför användarnamn
+        if (review.author.username !== request.username) {
+            err = errorHandler.createError(
+                'Forbidden',
+                403,
+                'Du har inte behörighet att utföra denna åtgärd.'
+            );
             return reply.code(err.https_response.code).send(err);
         }
 

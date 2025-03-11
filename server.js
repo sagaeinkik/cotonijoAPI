@@ -49,6 +49,7 @@ fastify.register(require('./routes/review.routes'));
     console.log('Cookies:', request.cookies);
 });
  */
+
 //App
 let port = process.env.PORT || 3000;
 
