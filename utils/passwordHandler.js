@@ -28,34 +28,6 @@ module.exports.createToken = (reply, username) => {
 //Validera token
 module.exports.authenticateToken = async (request, reply) => {
     let err = errHandler.createError();
-    /* 
-    Kod för att validera token: används om httponly-cookie inte fungerar
-    const authHeader = request.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; //Själva token utan ord
-
-    //Header saknas helt
-    if (!authHeader) {
-        err = errHandler.createError('Unauthorized', 401, 'Missing Token');
-        return reply.code(401).send(err);
-    }
-
-    //Token saknas
-    if (!token) {
-        err = errHandler.createError('Unauthorized', 401, 'Missing Token');
-        return reply.code(401).send(err);
-    }
-
-    //Har vi kommit hit kan vi jämföra token med nyckel
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-        if (err) {
-            console.error('Tokenverifieringsfel:', err);
-            err = errHandler.createError('Unauthorized', 403, 'Invalid Token');
-            return reply.code(403).send(err);
-        }
-
-        request.username = user.username;
-    });
-    return; */
 
     //Hämta token från cookie
     const token = request.cookies.jwt;

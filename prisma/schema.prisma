@@ -22,6 +22,7 @@ model Review {
   content   String
   rating    Int
   ccn3      String 
+  posted    DateTime  @default(now()) @db.DateTime(0)
   userId    Int
   author    User    @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserReviews")
 }

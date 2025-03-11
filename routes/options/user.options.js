@@ -1,7 +1,6 @@
 'use strict';
 
 const userController = require('../../controllers/user.controller');
-const pwHandler = require('../../utils/passwordHandler');
 
 //Alla användare
 module.exports.getAllUsersOpts = {
