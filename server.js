@@ -3,14 +3,19 @@
 const fastify = require('fastify')({ logger: false });
 const { PrismaClient } = require('@prisma/client');
 require('dotenv').config();
-const cors = require('@fastify/cors');
-const prisma = new PrismaClient();
+const prisma = require('./prisma');
 
 //Middleware
+const cors = require('@fastify/cors');
 fastify.register(cors, {
     origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
+});
+
+const cookie = require('@fastify/cookie');
+fastify.register(cookie, {
+    secret: process.env.JWT_SECRET_KEY,
 });
 
 //Routes
@@ -21,6 +26,13 @@ fastify.get('/', async (request, reply) => {
         message:
             'Välkommen till mitt API för projektet i Fördjupad Frontend-utveckling på Mittuniversitetet.',
     };
+});
+
+fastify.register(require('./routes/user.routes'));
+
+// Hook för att se om cookies finns i request!
+fastify.addHook('onRequest', async (request, reply) => {
+    console.log('Cookies:', request.cookies);
 });
 
 //App
