@@ -38,6 +38,7 @@ Användare kan endast uppdatera eller radera recensioner de själva har skapat.
 | Metod  | Endpoint               | Beskrivning                                   | Kräver autentisering |
 | ------ | ---------------------- | --------------------------------------------- | -------------------- |
 | GET    |  /                     | Välkomstroute                                 | Nej                  |
+| GET    | /auth/me               |  Kolla om användare är inloggad               |  Nej                 |
 | GET    | /users                 | Hämta alla användare                          | Nej                  |
 | GET    | /users/:id             | Hämta enskild användare med ID                | Nej                  |
 | POST   | /signup                | Skapa en ny användare                         | Nej                  |
