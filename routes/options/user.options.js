@@ -13,6 +13,7 @@ module.exports.getAllUsersOpts = {
                     properties: {
                         id: { type: 'number' },
                         fullName: { type: 'string' },
+                        email: { type: 'string' },
                         username: { type: 'string' },
                         registered: { type: 'string', format: 'date-time' },
                     },
@@ -32,6 +33,7 @@ module.exports.getUserByIdOpts = {
                 properties: {
                     id: { type: 'number' },
                     fullName: { type: 'string' },
+                    email: { type: 'string' },
                     username: { type: 'string' },
                     registered: { type: 'string', format: 'date-time' },
                 },
@@ -46,7 +48,7 @@ module.exports.addUserOpts = {
     schema: {
         body: {
             type: 'object',
-            required: ['fullName', 'username', 'password'],
+            required: ['fullName', 'email', 'username', 'password'],
             properties: {
                 fullName: {
                     type: 'string',
@@ -55,6 +57,13 @@ module.exports.addUserOpts = {
                     errorMessage: {
                         minLength: 'Namnet måste innehålla minst 3 tecken.',
                         maxLength: 'Namnet får innehålla max 255 tecken.',
+                    },
+                },
+                email: {
+                    type: 'string',
+                    format: 'email',
+                    errorMessage: {
+                        format: 'Du måste ange en giltig epost-adress.',
                     },
                 },
                 username: {
@@ -75,6 +84,7 @@ module.exports.addUserOpts = {
             errorMessage: {
                 required: {
                     fullName: 'Du måste ange ett namn',
+                    email: 'Du måste ange en epost-adress',
                     username: 'Du måste ange ett användarnamn',
                     password: 'Du måste ange ett lösenord',
                 },
@@ -90,6 +100,7 @@ module.exports.addUserOpts = {
                         properties: {
                             id: { type: 'number' },
                             fullName: { type: 'string' },
+                            email: { type: 'string' },
                             username: { type: 'string' },
                             registered: { type: 'string', format: 'date-time' },
                         },
@@ -128,6 +139,7 @@ module.exports.loginUserOpts = {
                         properties: {
                             id: { type: 'number' },
                             fullName: { type: 'string' },
+                            email: { type: 'string' },
                             username: { type: 'string' },
                             registered: { type: 'string', format: 'date-time' },
                         },
@@ -166,6 +178,13 @@ module.exports.updateUserOpts = {
                     maxLength: 255,
                     errorMessage: 'Namnet måste vara mellan 3 och 255 tecken långt.',
                 },
+                email: {
+                    type: 'string',
+                    format: 'email',
+                    errorMessage: {
+                        format: 'Du måste ange en giltig epost-adress.',
+                    },
+                },
                 username: {
                     type: 'string',
                     minLength: 3,
@@ -185,6 +204,7 @@ module.exports.updateUserOpts = {
                         properties: {
                             id: { type: 'number' },
                             fullName: { type: 'string' },
+                            email: { type: 'string' },
                             username: { type: 'string' },
                             registered: { type: 'string', format: 'date-time' },
                         },
@@ -209,6 +229,7 @@ module.exports.deleteUserOpts = {
                         properties: {
                             id: { type: 'number' },
                             fullName: { type: 'string' },
+                            email: { type: 'string' },
                             username: { type: 'string' },
                             registered: { type: 'string', format: 'date-time' },
                         },

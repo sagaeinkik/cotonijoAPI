@@ -52,7 +52,7 @@ module.exports.getUserById = async (request, reply) => {
 //Skapa ny
 module.exports.addUser = async (request, reply) => {
     err = errorHandler.resetErrors();
-    const { fullName, username, password } = request.body;
+    const { fullName, email, username, password } = request.body;
 
     //Validering av fält sker i Options
 
@@ -70,6 +70,7 @@ module.exports.addUser = async (request, reply) => {
         const newUser = await prisma.user.create({
             data: {
                 fullName: fullName,
+                email: email,
                 username: username,
                 password: hashedPassword,
             },
@@ -83,6 +84,7 @@ module.exports.addUser = async (request, reply) => {
             newUser: {
                 id: newUser.id,
                 fullName: newUser.fullName,
+                email: newUser.email,
                 username: newUser.username,
                 registered: newUser.registered,
             },
@@ -125,6 +127,7 @@ module.exports.loginUser = async (request, reply) => {
             loggedInUser: {
                 id: user.id,
                 fullName: user.fullName,
+                email: user.email,
                 username: user.username,
                 registered: user.registered,
             },
@@ -199,6 +202,7 @@ module.exports.updateUser = async (request, reply) => {
             updatedUser: {
                 id: updatedUser.id,
                 fullName: updatedUser.fullName,
+                email: updatedUser.email,
                 username: updatedUser.username,
                 registered: updatedUser.registered,
             },
@@ -246,6 +250,7 @@ module.exports.deleteUser = async (request, reply) => {
             deletedUser: {
                 id: user.id,
                 fullName: user.fullName,
+                email: user.email,
                 username: user.username,
                 registered: user.registered,
             },

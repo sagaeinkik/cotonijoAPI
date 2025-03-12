@@ -31,6 +31,8 @@ För att snabbt generera en jwt secret key kan man köra `require("crypto").rand
 
 Recensionerna hänvisar länder i form av ccn3-koderna från det externa API:et. Varje ccn3-kod hänvisar till ett specifikt land. Koderna är alltid 3-siffriga.
 
+Användare kan endast uppdatera eller radera recensioner de själva har skapat.
+
 ## Endpoints
 
 | Metod  | Endpoint               | Beskrivning                                   | Kräver autentisering |
@@ -69,7 +71,3 @@ Ett exempelsvar från /reviews/:id kan se ut såhär:
     }
 }
 ```
-
-### Bra att veta
-
-Vid lyckade create, update och delete-operationer får man returnerat det påverkade objektet tillsammans med ett framgångsmeddelande.
