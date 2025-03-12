@@ -3,6 +3,7 @@
 const {
     getAllUsersOpts,
     getUserByIdOpts,
+    getUserByUsernameOpts,
     addUserOpts,
     loginUserOpts,
     logoutUserOpts,
@@ -13,6 +14,7 @@ const {
 async function userRoutes(fastify) {
     fastify.get('/users', getAllUsersOpts); // Alla användare
     fastify.get('/users/:id', getUserByIdOpts); // Enskild användare
+    fastify.get('/users/username/:username', getUserByUsernameOpts); // Enskild användare baserat på användarnamn
     fastify.post('/signup', addUserOpts); // Skapa ny
     fastify.post('/login', loginUserOpts); // Logga in
     fastify.post('/logout', logoutUserOpts); // Logga ut

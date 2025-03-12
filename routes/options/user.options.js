@@ -43,6 +43,25 @@ module.exports.getUserByIdOpts = {
     handler: userController.getUserById,
 };
 
+//Användare baserat på användarnamn
+module.exports.getUserByUsernameOpts = {
+    schema: {
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    id: { type: 'number' },
+                    fullName: { type: 'string' },
+                    email: { type: 'string' },
+                    username: { type: 'string' },
+                    registered: { type: 'string', format: 'date-time' },
+                },
+            },
+        },
+    },
+    handler: userController.getUserByUsername,
+};
+
 //Skapa ny användare
 module.exports.addUserOpts = {
     schema: {

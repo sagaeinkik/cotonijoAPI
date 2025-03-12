@@ -49,6 +49,27 @@ module.exports.getUserById = async (request, reply) => {
     }
 };
 
+//Användare baserat på användarnamn
+module.exports.getUserByUsername = async (request, reply) => {
+    err = errorHandler.resetErrors();
+
+    //användarnamn att söka på
+    const { username } = request.params;
+
+    try {
+        const user = await prisma.user.findUnique({ where: { username: username } });
+
+        if (!user) {
+            err = errorHandler.createError('Not Found', 404, 'Användaren hittades inte.');
+            return reply.code(err.https_response.code).send(err);
+        }
+
+        return reply.send(user);
+    } catch (error) {
+        return reply.code(500).send(error);
+    }
+};
+
 //Skapa ny
 module.exports.addUser = async (request, reply) => {
     err = errorHandler.resetErrors();
