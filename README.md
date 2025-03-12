@@ -35,24 +35,25 @@ Användare kan endast uppdatera eller radera recensioner de själva har skapat.
 
 ## Endpoints
 
-| Metod  | Endpoint               | Beskrivning                                   | Kräver autentisering |
-| ------ | ---------------------- | --------------------------------------------- | -------------------- |
-| GET    |  /                     | Välkomstroute                                 | Nej                  |
-| GET    | /auth/me               |  Kolla om användare är inloggad               |  Nej                 |
-| GET    | /users                 | Hämta alla användare                          | Nej                  |
-| GET    | /users/:id             | Hämta enskild användare med ID                | Nej                  |
-| POST   | /signup                | Skapa en ny användare                         | Nej                  |
-| POST   | /login                 | Logga in befintlig användare                  | Nej                  |
-| POST   | /logout                | Logga ut befintlig användare                  | Nej                  |
-| PUT    | /users/:id             | Uppdatera användare                           | Ja                   |
-| DELETE | /users/:id             | Radera en användare                           | Ja                   |
-| GET    | /reviews               | Hämtar alla recensioner                       | Nej                  |
-| GET    | /users/:id/reviews     | Hämtar alla recensioner av specifik användare | Nej                  |
-|  GET   | /reviews/country/:ccn3 | Hämtar alla recensioner av land               | Nej                  |
-| GET    | /reviews/:id           | Hämtar enskild recension med ID               | Nej                  |
-| POST   | /reviews               | Skapa ny recension                            |  Ja                  |
-|  PUT   | /reviews/:id           | Uppdatera recension                           | Ja                   |
-| DELETE | /reviews/:id           | Radera recension                              | Ja                   |
+| Metod  | Endpoint                  | Beskrivning                                   | Kräver autentisering |
+| ------ | ------------------------- | --------------------------------------------- | -------------------- |
+| GET    |  /                        | Välkomstroute                                 | Nej                  |
+| GET    | /auth/me                  |  Kolla om användare är inloggad               |  Nej                 |
+| GET    | /users                    | Hämta alla användare                          | Nej                  |
+| GET    | /users/:id                | Hämta enskild användare med ID                | Nej                  |
+| GET    | /users/username/:username | Hämta enskild användare med användarnamn      |  Nej                 |
+| POST   | /signup                   | Skapa en ny användare                         | Nej                  |
+| POST   | /login                    | Logga in befintlig användare                  | Nej                  |
+| POST   | /logout                   | Logga ut befintlig användare                  | Nej                  |
+| PUT    | /users/:id                | Uppdatera användare                           | Ja                   |
+| DELETE | /users/:id                | Radera en användare                           | Ja                   |
+| GET    | /reviews                  | Hämtar alla recensioner                       | Nej                  |
+| GET    | /users/:id/reviews        | Hämtar alla recensioner av specifik användare | Nej                  |
+|  GET   | /reviews/country/:ccn3    | Hämtar alla recensioner av land               | Nej                  |
+| GET    | /reviews/:id              | Hämtar enskild recension med ID               | Nej                  |
+| POST   | /reviews                  | Skapa ny recension                            |  Ja                  |
+|  PUT   | /reviews/:id              | Uppdatera recension                           | Ja                   |
+| DELETE | /reviews/:id              | Radera recension                              | Ja                   |
 
 ### Exempel
 
