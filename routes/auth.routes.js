@@ -5,7 +5,7 @@ const jwtKey = process.env.JWT_SECRET_KEY;
 
 async function authRoutes(fastify) {
     //Route för att kontrollera om en användare är inloggad öht
-    fastify.get('/auth/me', { preHandler: authenticateToken }, async (request, reply) => {
+    fastify.get('/auth/me', async (request, reply) => {
         //Token ur cookie
         const token = request.cookies.jwt;
 
