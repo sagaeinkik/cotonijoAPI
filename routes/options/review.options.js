@@ -130,32 +130,34 @@ module.exports.addReviewOpts = {
                 content: {
                     type: 'string',
                     minLength: 3,
-                    errorMessage: { minLength: 'Textinnehållet måste innehålla minst 3 tecken.' },
+                    errorMessage: {
+                        minLength: 'Review content must contain a minimum of 3 characters.',
+                    },
                 },
                 rating: {
                     type: 'number',
                     minimum: 1,
                     maximum: 5,
                     errorMessage: {
-                        minimum: 'Betyget kan som lägst vara 1.',
-                        maximum: 'Betyget kan som högst vara 5.',
+                        minimum: 'Rating cannot be lower than 1.',
+                        maximum: 'Rating cannot be higher than 5.',
                     },
                 },
                 ccn3: {
                     type: 'string',
                     pattern: '^[0-9]{3}$',
                     errorMessage: {
-                        pattern: 'Landskoden måste vara tresiffrig.',
+                        pattern: 'Ccn3 must be 3 digits',
                     },
                 },
                 userId: { type: 'number' },
             },
             errorMessage: {
                 required: {
-                    content: 'Du måste ange textinnehåll för recensionen.',
-                    rating: 'Du måste ange ett betyg.',
-                    ccn3: 'Du måste ange en landskod (ccn3).',
-                    userId: 'Du måste ange ett användarID.',
+                    content: 'Review content is mandatory.',
+                    rating: 'Rating is mandatory.',
+                    ccn3: 'Ccn3 is mandatory.',
+                    userId: 'UserId is mandatory.',
                 },
             },
         },
@@ -199,22 +201,24 @@ module.exports.updateReviewOpts = {
                 content: {
                     type: 'string',
                     minLength: 3,
-                    errorMessage: { minLength: 'Textinnehållet måste innehålla minst 3 tecken.' },
+                    errorMessage: {
+                        minLength: 'Review content must contain a minimum of 3 characters.',
+                    },
                 },
                 rating: {
                     type: 'number',
                     minimum: 1,
                     maximum: 5,
                     errorMessage: {
-                        minimum: 'Betyget kan som lägst vara 1.',
-                        maximum: 'Betyget kan som högst vara 5.',
+                        minimum: 'Rating cannot be lower than 1.',
+                        maximum: 'Rating cannot be higher than 5.',
                     },
                 },
                 ccn3: {
                     type: 'string',
                     pattern: '^[0-9]{3}$',
                     errorMessage: {
-                        pattern: 'Landskoden måste vara tresiffrig.',
+                        pattern: 'Ccn3 must be 3 digits.',
                     },
                 },
                 userId: { type: 'number' },

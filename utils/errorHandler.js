@@ -24,7 +24,7 @@ exports.checkEmpty = (val, fieldName) => {
     ) {
         return {
             valid: false,
-            error: exports.createError('Bad request', 400, `${fieldName} får ej lämnas tomt.`),
+            error: exports.createError('Bad request', 400, `${fieldName} is a mandatory field.`),
         };
     } else {
         return { valid: true };

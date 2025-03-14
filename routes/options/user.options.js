@@ -74,15 +74,15 @@ module.exports.addUserOpts = {
                     minLength: 3,
                     maxLength: 255,
                     errorMessage: {
-                        minLength: 'Namnet måste innehålla minst 3 tecken.',
-                        maxLength: 'Namnet får innehålla max 255 tecken.',
+                        minLength: 'The full name must contain a minimum of 3 characters.',
+                        maxLength: 'The full name cannot contain more than 255 characters.',
                     },
                 },
                 email: {
                     type: 'string',
                     format: 'email',
                     errorMessage: {
-                        format: 'Du måste ange en giltig epost-adress.',
+                        format: 'You must enter a valid email address.',
                     },
                 },
                 username: {
@@ -90,22 +90,22 @@ module.exports.addUserOpts = {
                     minLength: 3,
                     maxLength: 255,
                     errorMessage: {
-                        minLength: 'Användarnamnet måste innehålla minst 3 tecken.',
-                        maxLength: 'Användarnamnet får innehålla max 255 tecken.',
+                        minLength: 'Username must contain a minimum of 3 characters.',
+                        maxLength: 'Username cannot contain more than 255 characters.',
                     },
                 },
                 password: {
                     type: 'string',
                     minLength: 3,
-                    errorMessage: { minLength: 'Lösenordet måste innehålla minst 3 tecken.' },
+                    errorMessage: { minLength: 'Password must contain a minimum of 3 characters.' },
                 },
             },
             errorMessage: {
                 required: {
-                    fullName: 'Du måste ange ett namn',
-                    email: 'Du måste ange en epost-adress',
-                    username: 'Du måste ange ett användarnamn',
-                    password: 'Du måste ange ett lösenord',
+                    fullName: 'You must enter your full name.',
+                    email: 'You must enter an email.',
+                    username: 'You must enter a username.',
+                    password: 'You must enter a password.',
                 },
             },
         },
@@ -143,8 +143,8 @@ module.exports.loginUserOpts = {
             },
             errorMessage: {
                 required: {
-                    username: 'Du måste ange ett användarnamn.',
-                    password: 'Du måste ange ett lösenord.',
+                    username: 'You must enter a username.',
+                    password: 'You must enter a password.',
                 },
             },
         },
@@ -195,20 +195,20 @@ module.exports.updateUserOpts = {
                     type: 'string',
                     minLength: 3,
                     maxLength: 255,
-                    errorMessage: 'Namnet måste vara mellan 3 och 255 tecken långt.',
+                    errorMessage: 'The full name must be between 3 and 255 characters.',
                 },
                 email: {
                     type: 'string',
                     format: 'email',
                     errorMessage: {
-                        format: 'Du måste ange en giltig epost-adress.',
+                        format: 'You must enter a valid email address.',
                     },
                 },
                 username: {
                     type: 'string',
                     minLength: 3,
                     maxLength: 255,
-                    errorMessage: 'Användarnamnet måste vara mellan 3 och 255 tecken långt.',
+                    errorMessage: 'The username must be between 3 and 255 characters.',
                 },
                 password: { type: 'string' },
             },

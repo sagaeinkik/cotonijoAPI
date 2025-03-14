@@ -28,7 +28,7 @@ module.exports.getAllReviews = async (request, reply) => {
 
         //Inga recensioner
         if (reviews.length === 0) {
-            err = errorHandler.createError('Not Found', 404, 'Inga recensioner hittades.');
+            err = errorHandler.createError('Not Found', 404, 'No reviews found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -63,7 +63,7 @@ module.exports.getReviewById = async (request, reply) => {
 
         //Ingen recension
         if (!review) {
-            err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            err = errorHandler.createError('Not found', 404, 'No review found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -97,7 +97,7 @@ module.exports.getReviewsByUser = async (request, reply) => {
         });
 
         if (reviews.length === 0) {
-            err = errorHandler.createError('Not Found', 404, 'Inga recensioner hittades.');
+            err = errorHandler.createError('Not Found', 404, 'No reviews found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -132,7 +132,7 @@ module.exports.getReviewsByCountry = async (request, reply) => {
         });
 
         if (reviews.length === 0) {
-            err = errorHandler.createError('Not found', 404, 'Inga recensioner hittades.');
+            err = errorHandler.createError('Not found', 404, 'No reviews found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -173,7 +173,7 @@ module.exports.addReview = async (request, reply) => {
             },
         });
 
-        return reply.send({ message: 'Recension tillagd!', review });
+        return reply.send({ message: 'Review added!', review });
     } catch (error) {
         return reply.code(500).send(error);
     }
@@ -206,7 +206,7 @@ module.exports.updateReview = async (request, reply) => {
 
         //Ingen recension hittades
         if (!review) {
-            err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            err = errorHandler.createError('Not found', 404, 'No review found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -215,7 +215,7 @@ module.exports.updateReview = async (request, reply) => {
             err = errorHandler.createError(
                 'Forbidden',
                 403,
-                'Du har inte behörighet att utföra denna åtgärd.'
+                'You are unauthorized to perform this action.'
             );
             return reply.code(err.https_response.code).send(err);
         }
@@ -237,7 +237,7 @@ module.exports.updateReview = async (request, reply) => {
             },
         });
 
-        return reply.send({ message: 'Recension uppdaterad!', review: updatedReview });
+        return reply.send({ message: 'Review updated!', review: updatedReview });
     } catch (error) {
         return reply.code(500).send(error);
     }
@@ -268,7 +268,7 @@ module.exports.deleteReview = async (request, reply) => {
 
         //Ingen recension
         if (!review) {
-            err = errorHandler.createError('Not found', 404, 'Ingen recension hittades.');
+            err = errorHandler.createError('Not found', 404, 'No review found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -277,7 +277,7 @@ module.exports.deleteReview = async (request, reply) => {
             err = errorHandler.createError(
                 'Forbidden',
                 403,
-                'Du har inte behörighet att utföra denna åtgärd.'
+                'You are unauthorized to perform this action.'
             );
             return reply.code(err.https_response.code).send(err);
         }
@@ -287,7 +287,7 @@ module.exports.deleteReview = async (request, reply) => {
             where: { id: parseInt(id) },
         });
 
-        return reply.send({ message: 'Recension raderad!', review });
+        return reply.send({ message: 'Review deleted!', review });
     } catch (error) {
         return reply.code(500).send(error);
     }

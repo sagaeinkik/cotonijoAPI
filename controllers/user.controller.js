@@ -18,7 +18,7 @@ module.exports.getAllUsers = async (request, reply) => {
 
         //Inga användare hittades
         if (users.length === 0) {
-            err = errorHandler.createError('Not Found', 404, 'Inga användare hittades.');
+            err = errorHandler.createError('Not Found', 404, 'No users found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -39,7 +39,7 @@ module.exports.getUserById = async (request, reply) => {
         const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
 
         if (!user) {
-            err = errorHandler.createError('Not Found', 404, 'Användaren hittades inte.');
+            err = errorHandler.createError('Not Found', 404, 'No user found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -60,7 +60,7 @@ module.exports.getUserByUsername = async (request, reply) => {
         const user = await prisma.user.findUnique({ where: { username: username } });
 
         if (!user) {
-            err = errorHandler.createError('Not Found', 404, 'Användaren hittades inte.');
+            err = errorHandler.createError('Not Found', 404, 'No user found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -81,7 +81,7 @@ module.exports.addUser = async (request, reply) => {
         //Kolla om användare redan finns
         const existingUser = await prisma.user.findUnique({ where: { username: username } });
         if (existingUser) {
-            err = errorHandler.createError('Conflict', 409, 'Användarnamnet är upptaget.');
+            err = errorHandler.createError('Conflict', 409, 'Username already in use.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -101,7 +101,7 @@ module.exports.addUser = async (request, reply) => {
         pwHandler.createToken(reply, username);
 
         return reply.code(201).send({
-            message: 'Användare tillagd!',
+            message: 'User added!',
             newUser: {
                 id: newUser.id,
                 fullName: newUser.fullName,
@@ -126,7 +126,7 @@ module.exports.loginUser = async (request, reply) => {
         const user = await prisma.user.findUnique({ where: { username: username } });
 
         if (!user) {
-            err = errorHandler.createError('Unauthorized', 401, 'Fel användarnamn eller lösenord.');
+            err = errorHandler.createError('Unauthorized', 401, 'Wrong username or password.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -135,7 +135,7 @@ module.exports.loginUser = async (request, reply) => {
 
         //Fel lösenord
         if (!authorized) {
-            err = errorHandler.createError('Unauthorized', 401, 'Fel användarnamn eller lösenord.');
+            err = errorHandler.createError('Unauthorized', 401, 'Wrong username or password.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -144,7 +144,7 @@ module.exports.loginUser = async (request, reply) => {
 
         //Returnera användaren
         return reply.send({
-            message: 'Inloggning lyckades!',
+            message: 'User logged in!',
             loggedInUser: {
                 id: user.id,
                 fullName: user.fullName,
@@ -166,7 +166,7 @@ module.exports.logoutUser = async (request, reply) => {
         //Radera cookie
         await pwHandler.destroyCookie(reply);
 
-        return reply.send({ message: 'Användare utloggad!' });
+        return reply.send({ message: 'User logged out!' });
     } catch (error) {
         return reply.code(500).send(error);
     }
@@ -184,7 +184,7 @@ module.exports.updateUser = async (request, reply) => {
         const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
 
         if (!user) {
-            err = errorHandler.createError('Not Found', 404, 'Användaren hittades inte.');
+            err = errorHandler.createError('Not Found', 404, 'User not found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -195,7 +195,7 @@ module.exports.updateUser = async (request, reply) => {
             err = errorHandler.createError(
                 'Unauthorized',
                 401,
-                'Du har inte behörighet att utföra denna åtgärd.'
+                'You are unauthorized to perform this action.'
             );
             return reply.code(err.https_response.code).send(err);
         }
@@ -219,7 +219,7 @@ module.exports.updateUser = async (request, reply) => {
 
         //returnera
         return reply.send({
-            message: 'Användaren uppdaterad!',
+            message: 'User updated!',
             updatedUser: {
                 id: updatedUser.id,
                 fullName: updatedUser.fullName,
@@ -244,7 +244,7 @@ module.exports.deleteUser = async (request, reply) => {
         const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
 
         if (!user) {
-            err = errorHandler.createError('Not Found', 404, 'Användaren hittades inte.');
+            err = errorHandler.createError('Not Found', 404, 'User not found.');
             return reply.code(err.https_response.code).send(err);
         }
 
@@ -255,7 +255,7 @@ module.exports.deleteUser = async (request, reply) => {
             err = errorHandler.createError(
                 'Unauthorized',
                 401,
-                'Du har inte behörighet att utföra denna åtgärd.'
+                'You are unauthorized to perform this action.'
             );
             return reply.code(err.https_response.code).send(err);
         }
@@ -267,7 +267,7 @@ module.exports.deleteUser = async (request, reply) => {
         await pwHandler.destroyCookie(reply);
 
         return reply.send({
-            message: 'Användare raderad! ',
+            message: 'User deleted!',
             deletedUser: {
                 id: user.id,
                 fullName: user.fullName,

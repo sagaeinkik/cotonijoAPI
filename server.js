@@ -37,7 +37,7 @@ fastify.register(cookie, {
 fastify.get('/', async (request, reply) => {
     return {
         message:
-            'Välkommen till mitt API för projektet i Fördjupad Frontend-utveckling på Mittuniversitetet.',
+            'Välkommen till mitt API för projektet i Fördjupad Frontend-utveckling på Mittuniversitetet. Det är framtaget för en klientapplikation på engelska, därav är även API:et och felmeddelanden på engelska.',
     };
 });
 
@@ -45,7 +45,7 @@ fastify.register(require('./routes/user.routes'));
 fastify.register(require('./routes/review.routes'));
 fastify.register(require('./routes/auth.routes'));
 
-// Hook för att se om cookies finns i request (kommenteras bort vid publicering, kom ihåg)
+// Hook man kan använda vid testning för att se om cookies fungerar
 /* fastify.addHook('onRequest', async (request, reply) => {
     console.log('Cookies:', request.cookies);
 });
