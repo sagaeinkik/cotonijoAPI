@@ -17,8 +17,9 @@ module.exports.createToken = (reply, username) => {
     //Sätt cookie
     reply.setCookie('jwt', token, {
         httpOnly: true,
+        secure: true,
         path: '/',
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: expirationDate,
     });
 
