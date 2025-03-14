@@ -53,7 +53,7 @@ module.exports.authenticateToken = async (request, reply) => {
 
 //Radera cookie
 module.exports.destroyCookie = async (reply) => {
-    reply.clearCookie('jwt', { path: '/', httpOnly: true, sameSite: 'lax' });
+    reply.clearCookie('jwt', { path: '/', httpOnly: true, secure: true, sameSite: 'none' });
 };
 
 //Hasha lösenord
