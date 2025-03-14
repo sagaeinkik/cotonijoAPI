@@ -13,7 +13,7 @@ module.exports.getAllReviews = async (request, reply) => {
     try {
         //Alla recensioner: inkludera användarinfo
         const reviews = await prisma.review.findMany({
-            orderBy: { registered: 'desc' },
+            orderBy: { posted: 'desc' },
             include: {
                 author: {
                     select: {
@@ -49,7 +49,7 @@ module.exports.getReviewById = async (request, reply) => {
     try {
         const review = await prisma.review.findUnique({
             where: { id: parseInt(id) },
-            orderBy: { registered: 'desc' },
+            orderBy: { posted: 'desc' },
             include: {
                 author: {
                     select: {
@@ -85,7 +85,7 @@ module.exports.getReviewsByUser = async (request, reply) => {
         //Hämta reviews med användarID
         const reviews = await prisma.review.findMany({
             where: { userId: parseInt(id) },
-            orderBy: { registered: 'desc' },
+            orderBy: { posted: 'desc' },
             include: {
                 author: {
                     select: {
@@ -121,7 +121,7 @@ module.exports.getReviewsByCountry = async (request, reply) => {
         //Hämta med hjälp av landskod
         const reviews = await prisma.review.findMany({
             where: { ccn3: ccn3 },
-            orderBy: { registered: 'desc' },
+            orderBy: { posted: 'desc' },
             include: {
                 author: {
                     select: {
