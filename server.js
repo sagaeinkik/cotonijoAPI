@@ -19,7 +19,12 @@ const prisma = require('./prisma');
 //Middleware
 const cors = require('@fastify/cors');
 fastify.register(cors, {
-    origin: true,
+    origin: (origin, cb) => {
+        if (!origin) {
+            return cb(null, true); // Tillåt t.ex. thunderclient
+        }
+        return cb(null, origin); // Tillåt bara exakt den origin som skickar requesten
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
 });
