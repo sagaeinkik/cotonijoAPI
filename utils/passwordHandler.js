@@ -19,7 +19,7 @@ module.exports.createToken = (reply, username) => {
         httpOnly: true,
         secure: true,
         path: '/',
-        sameSite: 'none',
+        sameSite: 'lax',
         maxAge: expirationDate,
     });
 
