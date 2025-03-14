@@ -237,7 +237,7 @@ module.exports.updateReview = async (request, reply) => {
             },
         });
 
-        return reply.send({ message: 'Recension uppdaterad!', updatedReview });
+        return reply.send({ message: 'Recension uppdaterad!', review: updatedReview });
     } catch (error) {
         return reply.code(500).send(error);
     }

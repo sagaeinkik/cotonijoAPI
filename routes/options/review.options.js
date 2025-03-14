@@ -225,7 +225,7 @@ module.exports.updateReviewOpts = {
                 type: 'object',
                 properties: {
                     message: { type: 'string' },
-                    updatedReview: {
+                    review: {
                         type: 'object',
                         properties: {
                             id: { type: 'number' },
