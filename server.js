@@ -46,10 +46,9 @@ fastify.register(require('./routes/review.routes'));
 fastify.register(require('./routes/auth.routes'));
 
 // Hook man kan använda vid testning för att se om cookies fungerar
-/* fastify.addHook('onRequest', async (request, reply) => {
+fastify.addHook('onRequest', async (request, reply) => {
     console.log('Cookies:', request.cookies);
 });
- */
 
 //App
 let port = process.env.PORT || 3000;
