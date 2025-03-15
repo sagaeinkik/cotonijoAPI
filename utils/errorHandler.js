@@ -47,7 +47,7 @@ exports.validateFields = (reply, validation) => {
 module.exports.errorMapping = (error, request, reply) => {
     if (error.validation) {
         //Map:a felmeddelanden för att ta bort "body" från meddelandet
-        const messages = error.validation.map((err) => err.message.replace(/^body\./, ''));
+        const messages = error.validation.map((err) => err.message.replace(/^body\./, ' '));
         reply.status(400).send({ statusCode: 400, error: 'Bad Request', messages: messages });
     } else {
         reply.status(error.statusCode || 500).send(error);
